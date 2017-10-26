@@ -23,5 +23,25 @@ namespace LambdaChop
                 output[i] = func.Invoke(list[i]);
             return output;
         }
+
+
+
+        public static T[] Filter<T>(this T[] array, Predicate<T> pred)
+        {
+            List<T> filtered = new List<T>();
+            foreach (T item in array)
+                if (pred.Invoke(item))
+                    filtered.Add(item);
+            return filtered.ToArray();
+        }
+
+        public static List<T> Filter<T>(this List<T> list, Predicate<T> pred)
+        {
+            List<T> filtered = new List<T>();
+            foreach (T item in list)
+                if (pred.Invoke(item))
+                    filtered.Add(item);
+            return filtered;
+        }
     }
 }
