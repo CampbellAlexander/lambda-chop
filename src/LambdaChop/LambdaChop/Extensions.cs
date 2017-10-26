@@ -43,5 +43,25 @@ namespace LambdaChop
                     filtered.Add(item);
             return filtered;
         }
+
+
+
+        public static Func<CallerInput, PipedOutput> To<CallerInput, CallerOutput, PipedOutput>(
+            this Func<CallerInput, CallerOutput> func1,
+            Func<CallerOutput, PipedOutput> func2)
+        {
+            return x => func2.Invoke(func1.Invoke(x));
+        }
+
+        public static Func<Input, Output> Memoize<Input, Output>(this Func<Input, Output> func)
+        {
+            Dictionary<Input, Output> cache = new Dictionary<Input, Output>();
+            return x =>
+            {
+                if (!cache.ContainsKey(x))
+                    cache.Add(x, func.Invoke(x));
+                return cache[x];
+            };
+        }
     }
 }
