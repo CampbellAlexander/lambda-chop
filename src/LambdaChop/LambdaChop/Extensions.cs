@@ -77,11 +77,12 @@ namespace LambdaChop
         public static T[] pFilter<T>(this T[] array, Predicate<T> pred)
         {
             ConcurrentStack<T> filtered = new ConcurrentStack<T>();
-            Parallel.ForEach(array, item =>
+            Action<T> body = item =>
             {
                 if (pred.Invoke(item))
                     filtered.Push(item);
-            });
+            };
+            Parallel.ForEach(array, body);
             return filtered.ToArray();
         }
 
