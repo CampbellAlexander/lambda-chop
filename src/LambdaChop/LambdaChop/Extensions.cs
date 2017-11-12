@@ -20,17 +20,6 @@ namespace LambdaChop
 
 
 
-        public static void Apply<T>(this T[] array, Func<T, T> func)
-        {
-            for (int i = 0; i < array.Length; i++)
-                array[i] = func.Invoke(array[i]);
-        }
-        public static void pApply<T>(this T[] array, Func<T, T> func)
-        {
-            Action<int> body = i => array[i] = func.Invoke(array[i]);
-            Parallel.For(0, array.Length, body);
-        }
-
         public static T[] Map<T>(this T[] array, Func<T, T> func)
         {
             T[] output = new T[array.Length];
